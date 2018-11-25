@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+    <script src="marketLibrary.js" type="text/javascript"></script>
+</head>
+<body>
+
+<canvas id="myCanvas" width="720" height="480"></canvas>
+
+<script>
+  var ctx;
+
+//lets get rid of these soon?
+  var x, y;
+  var d = 20;
+  var width, height;
+
+//Company Data structure
+  var companyArray = [
+                { name : "Insurance Company" , owner: "Greg" , cash: 100 },
+                { name : "American Insurance" , owner: "Andrew" , cash: 96 },
+  ];
+
+  var currentButtons = [];
+
+
+  main();
+
+
+  function main() {
+      canvasE = document.getElementById('myCanvas');
+      ctx= canvasE.getContext('2d');
+      width = canvasE.width;
+      height = canvasE.height;
+      x = d+50;
+      y = d+50;
+      canvasE.addEventListener("click", onClick, false);
+
+      clear();
+      titleMenu();
+
+      var input = new CanvasInput({
+  canvas: document.getElementById('canvas')
+});
+
+  //    setInterval(loop, 15);
+
+  }
+
+  function onClick(e) {
+      var element = canvasE;
+      var offsetX = 0, offsetY = 0
+
+          if (element.offsetParent) {
+        do {
+          offsetX += element.offsetLeft;
+          offsetY += element.offsetTop;
+        } while ((element = element.offsetParent));
+      }
+
+      x = e.pageX - offsetX;
+      y = e.pageY - offsetY;
+
+      clickManager(x,y);
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

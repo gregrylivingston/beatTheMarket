@@ -26,10 +26,33 @@ chooser ::
 */
 var menuNester = 180;
   var buttonDistance = 132;
-var titleButtonData = { text:"Can YOU Beat The Market?" , length:520 , size:40 , x: menuNester , y:10};
+var titleButtonData = { text:"Beat the Market" , length:520 , size:40 , x: menuNester , y:10};
 var mainMenuButtonData = { text:"Main Menu" , length:165 , size:40 , x:10 , y:10 , action: function(){titleMenu()}};
-var companyName = [ "Christian's Cargo" , "Timmy's Toys" , "Laura's Pies"];
+var companyName = [
+          "Christian's Coffee" ,
+          "Tim's Ideas" ,
+          "Laura's Pies",
+          "Tech companies",
+          "Big pharma",
+          "Big banking",
+          "Ma and pa shops",
+          "Big box stores",
+          "National food chains",
+          "Fast food"];
 var companySymbol = [ "ccgo" , "timm" , "lpi"];
+var newsArray = [
+          "facing strike calls." ,
+          "having profitable quarter." ,
+          "facing rising prices." ,
+          "facing shutdown." ,
+          "showing big profits.",
+          "seeing declining sales.",
+          "CEO has high hopes.",
+          "coping with regulations",
+          "leading in innovation",
+          "market share rises"
+        ];
+var companyWheel = 0;
 var optionsMenuButtonData;
 var currentChoosers;
 var market = [[ 50, 50, (Math.random()+1.5)*25 ],[ 50, 50, (Math.random()+1.5)*25 ],[ 50, 50, (Math.random()+1.5)*25]];
@@ -40,12 +63,21 @@ var market = [[ 50, 50, (Math.random()+1.5)*25 ],[ 50, 50, (Math.random()+1.5)*2
   var marketValuesCounter;
   var shares = 10000.00;
   var holdings = "Dollars";
+  var status = "cash";
+  var valuer = 1.0;
+  var company = -1;
   var interval = null;
   var rounds = 3;
   var color = ["white", "#444e86","white","yellow","#808080","#A7226E","#EC2049","#F26B38"];
   var status = "cash";
-  var valuer = 1;
+  var valuer = 1.0;
   var company = -1;
+    var newsCounter = 0;
+    var newsRand1 = 0;
+    var newsRand2 = 0;
+    var valueTxt;
+    var indexValue = 1.0;
+
 
   //color pallettes to try {
     //#fe4a49 • #2ab7ca • #fed766
@@ -56,7 +88,38 @@ var market = [[ 50, 50, (Math.random()+1.5)*25 ],[ 50, 50, (Math.random()+1.5)*2
 //#eb6841  • #4f372d • #00a0b0
 
 
+function companySwitch(){
 
+if (companyWheel == 0){
+
+      companyName.unshift("Hammock by Yanley") ;
+      companyName.unshift("Danielle's Desserts") ;
+      companyName.unshift("Sonia's Soup") ;
+      companySymbol.unshift("hammock") ;
+      companySymbol.unshift("dess") ;
+      companySymbol.unshift("soup") ;
+      companyWheel = 1;}
+    else if (companyWheel == 1){
+      companyName.unshift("Rita's Reports") ;
+      companyName.unshift("Cheer Camp") ;
+      companyName.unshift("JessCo") ;
+      companySymbol.unshift("rprt") ;
+      companySymbol.unshift("abby") ;
+      companySymbol.unshift("jess") ;
+      companyWheel = 2;}
+      else if (companyWheel == 2){
+        companyName.unshift("Christian's Coffee") ;
+        companyName.unshift("Tim's Ideas") ;
+        companyName.unshift("Laura's Pies") ;
+        companySymbol.unshift("ccgo") ;
+        companySymbol.unshift("timm") ;
+        companySymbol.unshift("lpi") ;
+        companyWheel = 0;}
+
+    
+
+  titleMenu();
+}
 
   var marketValuesCounter = 1;
 
@@ -83,8 +146,19 @@ function clickManager( x , y )
                     status = "stock";
                     company = i;
                     detailsMenu();
-
+                    buySymbol = [" "," " ," "]
+                    buySymbol[i] = "Sell";
                   }
+        else if (buySymbol[i] == "Sell") {
+          var currentCompany = market[i];
+          holdings = "Dollars";
+          buySymbol = ["Buy","Buy" ,"Buy"];
+          shares = (shares * currentCompany[marketValuesCounter]);
+          status = "cash";
+          company = -1;
+          detailsMenu();
+
+        }
 
 
 
@@ -214,15 +288,47 @@ function drawChooser (  ){
   ctx.beginPath();
   ctx.fillStyle=color[2];
   ctx.font = chooserData.size *.7+ "px Arial";
-  ctx.fillText("Rounds: " + rounds, chooserData.x + chooserData.length*.5, chooserData.y + chooserData.size*1.2);
+  ctx.fillText("Coming Soon " + rounds, chooserData.x + chooserData.length*.5, chooserData.y + chooserData.size*1.2);
   ctx.closePath();
 }
 
 function titleMenu(){
   currentButtons = [ titleButtonData, mainMenuButtonData,
-{text:"Single Player" , length:200 , size:30 , x:400 , y:200 , action: function (){singlePlayerMenu()}},
+{text:"Companies" , length:200 , size:30 , x:400 , y:200 , action: function (){companySwitch()}},
 {text:"BeginGame" , length:200 , size:30 , x:400 , y:160, action: function (){beginGame()}}
 ];
+
+marketValuesCounter=1;
+ shares = 10000.00;
+ holdings = "Dollars";
+ status = "cash";
+ valuer = 1.0;
+ company = -1;
+  buySymbol = ["Buy","Buy" ,"Buy"];
+
+
+
+ market = [[ 50, 50, (Math.random()+1.5)*25 ],[ 50, 50, (Math.random()+1.5)*25 ],[ 50, 50, (Math.random()+1.5)*25]];
+   market1 = market[0];
+   market2 = market[1];
+   market3 = market[2];
+
+   var randomNumber = Math.random();
+   for ( var i = 0 ; i < 10 ; i++)
+   if (randomNumber < i/10)
+     {
+       newsRand1 = i;
+       i = 10;
+ }
+ var randomNumber2 = Math.random();
+ for ( var i = 0 ; i < 10 ; i++)
+ if (randomNumber2 < i/10)
+   {
+     newsRand2 = i;
+     i = 10;
+}
+
+    clearInterval(interval);
 
 clear();
 loop();
@@ -286,7 +392,7 @@ function drawGrid(){
  ctx.beginPath();
  ctx.fillStyle='black';
  ctx.font = "10px Arial";
- ctx.fillText( "Year " + i , menuNester-41 + (52*i) , 72 );
+ ctx.fillText( "Year " + i , menuNester-30 + (52*i) , 72 );
  ctx.closePath();
  }
 
@@ -308,128 +414,14 @@ function drawGrid(){
 
 function beginGame(){
 clear();
-drawButton(titleButtonData);
 drawGrid();
 interval =  setInterval(loop, 120);
+drawButton(titleButtonData);
+drawButton(mainMenuButtonData);
+
 }
 
-function loop(){
 
-
-
-  var marketValue = market1[marketValuesCounter];
-  var yestValue = market1[marketValuesCounter-1];
-  var marketValue2 = market2[marketValuesCounter];
-  var yestValue2 = market2[marketValuesCounter-1];
-  var marketValue3 = market3[marketValuesCounter];
-  var yestValue3 = market3[marketValuesCounter-1];
-
-
-  ctx.beginPath();
-  ctx.strokeStyle = color[5];
-  ctx.moveTo( menuNester + marketValuesCounter - 1  , 390 - yestValue);
-  ctx.lineTo ( menuNester + marketValuesCounter , 390 - marketValue );
-  ctx.stroke();
-  ctx.closePath();
-
-  ctx.beginPath();
-  ctx.strokeStyle = color[6];
-  ctx.moveTo( menuNester + marketValuesCounter - 1  , 390 - yestValue2);
-  ctx.lineTo ( menuNester + marketValuesCounter , 390 - marketValue2 );
-  ctx.stroke();
-  ctx.closePath();
-
-  ctx.beginPath();
-  ctx.strokeStyle = color[7];
-  ctx.moveTo( menuNester + marketValuesCounter - 1  , 390 - yestValue3);
-  ctx.lineTo ( menuNester + marketValuesCounter , 390 - marketValue3 );
-  ctx.stroke();
-  ctx.closePath();
-
-var yestIndex = ((yestValue3+yestValue2+yestValue)/3);
-var marketIndex = ((marketValue3+marketValue2+marketValue)/3);
-
-
-  ctx.beginPath();
-  ctx.strokeStyle = color[4];
-  ctx.moveTo( menuNester + marketValuesCounter - 1  , 390 - yestIndex);
-  ctx.lineTo ( menuNester + marketValuesCounter , 390 - marketIndex);
-  ctx.stroke();
-  ctx.closePath();
-
-  marketValuesCounter++;
-  market1.push( market1[marketValuesCounter]*((9.52+Math.random())/10));
-  market2.push( market2[marketValuesCounter]*((9.52+Math.random())/10));
-  market3.push( market3[marketValuesCounter]*((9.52+Math.random())/10));
-
-  detailsMenu();
-
-
-
-var buttonSize = 126;
-var fontSize2 = 14;
-var lineA = 425; //starting space for a line of text in the bottom buttons
-var lineS = 20;
-
-  ctx.beginPath();
-  ctx.fillStyle=color[5];
-  ctx.rect( menuNester , 400 , buttonSize , 75 );
-  ctx.fill();
-  ctx.closePath();
-
-  ctx.beginPath();
-  ctx.fillStyle=color[6];
-  ctx.rect( menuNester + buttonDistance , 400 , buttonSize , 75 );
-  ctx.fill();
-  ctx.closePath();
-
-  ctx.beginPath();
-  ctx.fillStyle=color[7];
-  ctx.rect( menuNester + buttonDistance*2 , 400 , buttonSize , 75 );
-  ctx.fill();
-  ctx.closePath();
-
-  var marketValueString = marketValue.toString().substring(0,marketValue.toString().indexOf(".")+3);
-
-  ctx.beginPath();
-  ctx.fillStyle=color[2];
-  ctx.font = fontSize2 + "px Arial";
-  ctx.fillText( companyName[0] , menuNester + 65 , lineA );
-  ctx.fillText( companySymbol[0] + " || $" +marketValueString, menuNester + 65 , lineA+lineS );
-  ctx.fillText( "Buy" , menuNester + 65 , lineA+lineS*2 );
-
-  var marketValueString = marketValue2.toString().substring(0,5);
-
-  ctx.fillText( companyName[1] , menuNester + 65 + buttonDistance , lineA );
-  ctx.fillText( companySymbol[1] +" || $" +marketValueString, menuNester + 65 + buttonDistance , lineA+lineS );
-  ctx.fillText( "Buy" , menuNester + 65 + buttonDistance, lineA+lineS*2 );
-
-  var marketValueString = marketValue3.toString().substring(0,5);
-
-  ctx.fillText( companyName[2] , menuNester + 65 + buttonDistance*2 , lineA );
-  ctx.fillText( companySymbol[2] + " || $" +marketValueString, menuNester + 65 + buttonDistance*2 , lineA+lineS );
-  ctx.fillText( "Buy" , menuNester + 65 + buttonDistance*2, lineA+lineS*2 );
-
-  ctx.beginPath();
-  ctx.fillStyle=color[4];
-  ctx.rect( menuNester + buttonDistance*3 , 400 , buttonSize , 75 );
-  ctx.fill();
-  ctx.closePath();
-
-  var marketValueString = marketIndex.toString().substring(0,5);
-
-  ctx.beginPath();
-  ctx.fillStyle=color[2];
-  ctx.font = fontSize2 + "px Arial";
-  ctx.fillText( "Price: $" + marketValueString , menuNester + 65  + buttonDistance*3 , 430 );
-  ctx.fillText( "Index" , menuNester + 65  + buttonDistance*3 , 460 );
-  ctx.closePath();
-
-  if ( marketValuesCounter >= 520){
-    clearInterval(interval);
-
-  }
-}
 
 function detailsMenu(){
   ctx.beginPath();
@@ -474,6 +466,18 @@ function detailsMenu(){
   ctx.fill();
   ctx.closePath();
 
+  ctx.beginPath();
+  ctx.fillStyle=color[2];
+  ctx.rect( 12 , 425 , 161 , 29 );
+  ctx.fill();
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.fillStyle=color[1];
+  ctx.rect( 14 , 427 , 157 , 25 );
+  ctx.fill();
+  ctx.closePath();
+
   var sharesTxt = shares.toString();
   sharesTxt = sharesTxt.substring(0,8);
 
@@ -501,15 +505,15 @@ function detailsMenu(){
     var adder2 = counter[marketValuesCounter];
     summer2+=adder2;
   }
-  var indexValue = ((10000 / summer1)*summer2);
-  indexValue = indexValue.toString();
-  indexValue = indexValue.substring(0,8);
+  indexValue = ((10000 / summer1)*summer2);
+  indexValueTxt = indexValue.toString();
+  indexValueTxt = indexValueTxt.substring(0,8);
 
 
 
   ctx.beginPath();
   ctx.fillStyle=color[2];
-  ctx.font = "20px Arial";
+  ctx.font = "18px Arial";
   ctx.textAlign = "center";
   ctx.fillText( "Week   " + marketValuesCounter, 175/2 , 85 );
   ctx.fillText( "Holdings" , 175/2 , 115 );
@@ -518,7 +522,66 @@ function detailsMenu(){
   ctx.fillText( sharesTxt  , 175/2 , 205 );
   ctx.fillText( "Value" , 175/2 , 235 );
   ctx.fillText( "$" + valueTxt , 175/2 , 265 );
-  ctx.fillText( "Index Value" , 175/2 , 295 );
-  ctx.fillText( "$" + indexValue , 175/2 , 325 );
+  ctx.fillText( "Index Value" , 175/2 , 420 );
+  ctx.fillText( "$" + indexValueTxt , 175/2 , 445 );
   ctx.closePath();
+}
+
+function newsPaper(){
+
+    ctx.beginPath();
+    ctx.fillStyle=color[2];
+    ctx.rect( 15 , 280 , 155 , 120 );
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillStyle="lightgrey";
+    ctx.rect( 25 , 305 , 125 , 90 );
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillStyle="black";
+    ctx.rect( 45 , 325 , 77 , 30 );
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillStyle="black";
+    ctx.font = "18px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText( "Latest News" , 175/2 , 300 );
+    ctx.font = "14px Arial";
+    ctx.fillText( "Market Quarterly" , 175/2 , 320 );
+        ctx.font = "12px Arial";
+    ctx.fillText( companyName[newsRand1] , 175/2 , 375 );
+    ctx.fillText( newsArray[newsRand2] , 175/2 , 390 );
+    ctx.closePath();
+
+    newsCounter++;
+
+    if (newsCounter > 24){
+      newsCounter = 0;
+
+      var randomNumber = Math.random();
+      for ( var i = 0 ; i < 10 ; i++)
+      if (randomNumber < i/10)
+        {
+          newsRand1 = i;
+          i = 10;
+    }
+    var randomNumber2 = Math.random();
+    for ( var i = 0 ; i < 10 ; i++)
+    if (randomNumber2 < i/10)
+      {
+        newsRand2 = i;
+        i = 10;
+  }
+
+  }
+
+
+
+
 }

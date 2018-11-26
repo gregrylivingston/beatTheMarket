@@ -21,11 +21,13 @@
   var d = 20;
   var width, height;
 
+
 //Company Data structure
   var companyArray = [
                 { name : "Insurance Company" , owner: "Greg" , cash: 100 },
                 { name : "American Insurance" , owner: "Andrew" , cash: 96 },
   ];
+  var buySymbol = ["Buy","Buy","Buy"];
 
   var currentButtons = [];
 
@@ -75,8 +77,198 @@
 
 
 
+  function loop(){
 
 
+
+    var marketValue = market1[marketValuesCounter];
+    var yestValue = market1[marketValuesCounter-1];
+    var marketValue2 = market2[marketValuesCounter];
+    var yestValue2 = market2[marketValuesCounter-1];
+    var marketValue3 = market3[marketValuesCounter];
+    var yestValue3 = market3[marketValuesCounter-1];
+
+    var a = 1.5;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color[5];
+    ctx.moveTo( menuNester + marketValuesCounter - 1  , 390 - yestValue*a);
+    ctx.lineTo ( menuNester + marketValuesCounter , 390 - marketValue*a );
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.strokeStyle = color[6];
+    ctx.moveTo( menuNester + marketValuesCounter - 1  , 390 - yestValue2*a);
+    ctx.lineTo ( menuNester + marketValuesCounter , 390 - marketValue2*a );
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.strokeStyle = color[7];
+    ctx.moveTo( menuNester + marketValuesCounter - 1  , 390 - yestValue3*a);
+    ctx.lineTo ( menuNester + marketValuesCounter , 390 - marketValue3*a );
+    ctx.stroke();
+    ctx.closePath();
+
+  var yestIndex = ((yestValue3+yestValue2+yestValue)/3);
+  var marketIndex = ((marketValue3+marketValue2+marketValue)/3);
+
+
+    ctx.beginPath();
+    ctx.strokeStyle = color[4];
+    ctx.moveTo( menuNester + marketValuesCounter - 1  , 390 - yestIndex*a);
+    ctx.lineTo ( menuNester + marketValuesCounter , 390 - marketIndex*a);
+    ctx.stroke();
+    ctx.closePath();
+
+    marketValuesCounter++;
+    market1.push( market1[marketValuesCounter]*((9.514+Math.random())/10));
+    market2.push( market2[marketValuesCounter]*((9.514+Math.random())/10));
+    market3.push( market3[marketValuesCounter]*((9.514+Math.random())/10));
+
+    detailsMenu();
+
+    newsPaper();
+
+
+
+
+
+
+  var buttonSize = 126;
+  var fontSize2 = 14;
+  var lineA = 425; //starting space for a line of text in the bottom buttons
+  var lineS = 20;
+
+    ctx.beginPath();
+    ctx.fillStyle=color[5];
+    ctx.rect( menuNester , 400 , buttonSize , 75 );
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillStyle=color[6];
+    ctx.rect( menuNester + buttonDistance , 400 , buttonSize , 75 );
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillStyle=color[7];
+    ctx.rect( menuNester + buttonDistance*2 , 400 , buttonSize , 75 );
+    ctx.fill();
+    ctx.closePath();
+
+    var marketValueString = marketValue.toString().substring(0,marketValue.toString().indexOf(".")+3);
+
+    ctx.beginPath();
+    ctx.fillStyle=color[2];
+    ctx.font = fontSize2 + "px Arial";
+    ctx.fillText( companyName[0] , menuNester + 65 , lineA );
+    ctx.fillText( companySymbol[0] + " || $" +marketValueString, menuNester + 65 , lineA+lineS );
+    ctx.fillText( buySymbol[0] , menuNester + 65 , lineA+lineS*2 );
+
+    var marketValueString = marketValue2.toString().substring(0,5);
+
+    ctx.fillText( companyName[1] , menuNester + 65 + buttonDistance , lineA );
+    ctx.fillText( companySymbol[1] +" || $" +marketValueString, menuNester + 65 + buttonDistance , lineA+lineS );
+    ctx.fillText( buySymbol[1] , menuNester + 65 + buttonDistance, lineA+lineS*2 );
+
+    var marketValueString = marketValue3.toString().substring(0,5);
+
+    ctx.fillText( companyName[2] , menuNester + 65 + buttonDistance*2 , lineA );
+    ctx.fillText( companySymbol[2] + " || $" +marketValueString, menuNester + 65 + buttonDistance*2 , lineA+lineS );
+    ctx.fillText( buySymbol[2] , menuNester + 65 + buttonDistance*2, lineA+lineS*2 );
+
+    ctx.beginPath();
+    ctx.fillStyle=color[4];
+    ctx.rect( menuNester + buttonDistance*3 , 400 , buttonSize , 75 );
+    ctx.fill();
+    ctx.closePath();
+
+    var marketValueString = marketIndex.toString().substring(0,5);
+
+    ctx.beginPath();
+    ctx.fillStyle=color[2];
+    ctx.font = fontSize2 + "px Arial";
+    ctx.fillText( "Price: $" + marketValueString , menuNester + 65  + buttonDistance*3 , 430 );
+    ctx.fillText( "Index" , menuNester + 65  + buttonDistance*3 , 460 );
+    ctx.closePath();
+
+    if ( marketValuesCounter >= 520){
+          endGame( );
+
+    }
+  }
+
+function endGame( indexSum , playerSum ){
+
+    clearInterval(interval);
+
+    ctx.beginPath();
+    ctx.fillStyle=color[1];
+    ctx.rect( 180 , 60 , 400 , 200 );
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillStyle=color[0];
+    ctx.rect( 182 , 62 , 396 , 196 );
+    ctx.fill();
+    ctx.closePath();
+
+    if (  indexValue >=  valuer * shares ) {
+       ctx.beginPath();
+        ctx.fillStyle="black";
+        ctx.font = "18px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText( "You didn't beat the market." , 360 , 100 );
+        ctx.closePath();
+
+  }
+
+  else if (  indexValue < valuer * shares )
+  {
+    ctx.beginPath();
+     ctx.fillStyle="black";
+     ctx.font = "18px Arial";
+     ctx.textAlign = "center";
+     ctx.fillText( "You beat the market!" , 360 , 100 );
+      ctx.closePath();
+
+}
+
+
+var earnings = valuer * shares;
+var earningsPct = (earnings / 100)-100;
+earnings = earnings.toString();
+earnings = earnings.substring(0,8);
+earningsPct = earningsPct.toString();
+earningsPct = earningsPct.substring(0,6);
+earnings-=10000;
+earnings = earnings.toString();
+earnings = earnings.substring(0,8);
+
+var indexE = indexValue;
+var indexPct = ( indexE / 100 )-100;
+indexPct = indexPct.toString();
+indexPct = indexPct.substring(0,6);
+indexE -= 10000;
+indexE = indexE.toString();
+indexE = indexE.substring(0,8);
+
+ctx.beginPath();
+ ctx.fillStyle="black";
+ ctx.font = "14px Arial";
+ ctx.textAlign = "center";
+ ctx.fillText( "*On a $10000 investment*", 360 , 120 );
+ctx.fillText( "You made $" + earnings + ", or " + earningsPct + "%", 360 , 150 );
+ctx.fillText( "the market averaged $" + indexE + ", or " + indexPct + "%" , 360 , 170 );
+
+ctx.closePath();
+
+
+}
 
 
 

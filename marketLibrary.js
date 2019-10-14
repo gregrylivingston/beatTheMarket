@@ -26,7 +26,7 @@ chooser ::
 */
 var menuNester = 180;
   var buttonDistance = 132;
-var titleButtonData = { text:"Beat the Market" , length:520 , size:40 , x: menuNester , y:10};
+var titleButtonData = { text:"NGPF Investing Arena" , length:520 , size:40 , x: menuNester , y:10};
 var mainMenuButtonData = { text:"Main Menu" , length:165 , size:40 , x:10 , y:10 , action: function(){titleMenu()}};
 var companyName = [
           "Christian's Coffee" ,

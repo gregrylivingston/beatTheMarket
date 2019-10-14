@@ -32,13 +32,13 @@ var companyName = [
           "Christian's Coffee" ,
           "Tim's Ideas" ,
           "Laura's Pies",
-          "Tech companies",
-          "Big pharma",
-          "Big banking",
-          "Ma and pa shops",
-          "Big box stores",
-          "National food chains",
-          "Fast food"];
+          "Dan's Desserts",
+          "Hammock by Yanely",
+          "Sonia's Soup",
+          "Rita's Reports",
+          "Greg's Robotics",
+          "JessCo",
+          "Cheer Camp"];
 var companySymbol = [ "ccgo" , "timm" , "lpi"];
 var newsArray = [
           "facing strike calls." ,
@@ -93,7 +93,7 @@ function companySwitch(){
 if (companyWheel == 0){
 
       companyName.unshift("Hammock by Yanely") ;
-      companyName.unshift("Danielle's Desserts") ;
+      companyName.unshift("Dan's Desserts") ;
       companyName.unshift("Sonia's Soup") ;
       companySymbol.unshift("hammock") ;
       companySymbol.unshift("dess") ;

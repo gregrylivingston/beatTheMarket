@@ -92,7 +92,7 @@ function companySwitch(){
 
 if (companyWheel == 0){
 
-      companyName.unshift("Hammock by Yanley") ;
+      companyName.unshift("Hammock by Yanely") ;
       companyName.unshift("Danielle's Desserts") ;
       companyName.unshift("Sonia's Soup") ;
       companySymbol.unshift("hammock") ;
